@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Stress Detector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Face Stress Detector</h1>
+        <video id="video" width="640" height="480" autoplay></video>
+        <div id="status">Loading model...</div>
+        <div id="detected-expression">Express your face!</div>
+    </div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
