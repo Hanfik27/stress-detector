@@ -9,7 +9,7 @@ const finalResult = document.getElementById('final-result');
 let finalStressPercentage = 0;
 let timeLeft = 5;
 let isDetectionRunning = true;
-const DETECTION_INTERVAL = 1000 / 60; // 15 FPS
+const DETECTION_INTERVAL = 1000 / 60;
 
 // Load face-api.js models
 async function loadModels() {
@@ -135,8 +135,13 @@ function updateTimer(timerText) {
   timer.textContent = timerText;
 }
 
-// Handle window resizing
+// Handle window resizing (to support mobile devices and window resizing)
 window.addEventListener('resize', debounce(() => {
+  adjustVideoAndCanvasSize();
+}, 200));
+
+// Adjust video and canvas size dynamically
+function adjustVideoAndCanvasSize() {
   const container = document.querySelector('.video-container');
   const aspectRatio = video.videoWidth / video.videoHeight;
   const width = container.clientWidth;
@@ -145,9 +150,9 @@ window.addEventListener('resize', debounce(() => {
 
   const canvas = document.querySelector('canvas');
   if (canvas) faceapi.matchDimensions(canvas, { width, height: width / aspectRatio });
-}, 200));
+}
 
-// Debounce helper
+// Debounce helper to optimize resize events
 function debounce(func, delay) {
   let timeout;
   return function (...args) {
@@ -158,3 +163,8 @@ function debounce(func, delay) {
 
 // Initialize
 loadModels();
+
+// Handle orientation changes (for mobile devices)
+window.addEventListener('orientationchange', debounce(() => {
+  adjustVideoAndCanvasSize();
+}, 200));
