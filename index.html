@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Face and Stress Detection</title>
-    <script defer src="face-api.min.js"></script>
-    <script defer src="script.js"></script>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1 class="title">Face and Stress Detection</h1>
-    <div class="subtitle">By RelaxEducare</div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Face and Stress Detection</title>
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="title">Face and Stress Detection</h1>
+  <div class="subtitle">By RelaxEducare</div>
+  
+  <div class="video-container">
+    <video id="video" autoplay muted></video>
+  </div>
 
-    <div class="video-container">
-      <video id="video" autoplay muted></video>
-    </div>
+  <div class="status-container">
+    <div class="status-text" id="detection-status">Waiting...</div>
+    <div class="stress-level" id="stress-level">Stress Level: 0%</div>
+    <div class="timer" id="timer">Time Remaining: 5 seconds</div>
+  </div>
 
-    <div class="status-container">
-      <div class="status-text" id="detection-status">Waiting...</div>
-      <div class="stress-level" id="stress-level">Stress Level: 0%</div>
-      <div class="timer" id="timer">Time Remaining: 5 seconds</div>
-    </div>
+  <button class="refresh-button" onclick="location.reload();">Refresh</button>
 
-    <div class="footer">© 2024 Face and Stress Detection by RelaxEducare. All rights reserved.</div>
-  </body>
+  <div class="footer">
+    © 2024 Face and Stress Detection by RelaxEducare. All rights reserved.
+  </div>
+</body>
 </html>

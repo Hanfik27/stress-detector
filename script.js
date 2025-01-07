@@ -99,9 +99,7 @@ function drawDetectionBox(ctx, box) {
   ctx.strokeRect(box.x, box.y, box.width, box.height);
   ctx.font = 'bold 16px Arial';
   ctx.fillStyle = 'white';
-  ctx.strokeStyle = 'black';
   ctx.lineWidth = 3;
-  ctx.strokeText('Face Detected', box.x, box.y - 10);
   ctx.fillText('Face Detected', box.x, box.y - 10);
 }
 
