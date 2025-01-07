@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  overflow-x: hidden;
+}
+
+h1.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #0099ff;
+  text-align: center;
+}
+
+.subtitle {
+  font-family: "Great Vibes", cursive;
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #0099ff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Video Container */
+.video-container {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 4px solid #00ffff;
+  background-color: black;
+  width: 500px; /* Reduced size for container */
+  height: 400px; /* Maintain aspect ratio */
+  max-width: 90%; /* Ensures responsiveness */
+  margin: 0 auto;
+}
+
+video {
+  width: 800px; /* Maintain 800x600 resolution */
+  height: 600px;
+  object-fit: cover;
+  transform: scale(0.5); /* Scale down to fit container */
+  transform-origin: top left;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Status Information */
+.status-container {
+  margin-top: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+}
+
+.status-text {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.stress-level {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #ff8800;
+}
+
+.timer {
+  font-size: 1.3rem;
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.footer {
+  margin-top: 20px;
+  color: #666;
+  font-size: 1rem;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1.title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .status-text,
+  .stress-level,
+  .timer {
+    font-size: 1.2rem;
+  }
+
+  .footer {
+    font-size: 0.9rem;
+  }
+
+  .video-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 480px) {
+  h1.title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .status-text,
+  .stress-level,
+  .timer {
+    font-size: 1rem;
+  }
+
+  .footer {
+    font-size: 0.8rem;
+  }
+
+  .video-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+}

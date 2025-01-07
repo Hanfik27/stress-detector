@@ -15,10 +15,10 @@ const DETECTION_INTERVAL = 1000 / 60;
 async function loadModels() {
   try {
     await Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri('.stress-detector/models'),
-      faceapi.nets.faceLandmark68Net.loadFromUri('.stress-detector/models'),
-      faceapi.nets.faceRecognitionNet.loadFromUri('.stress-detector/models'),
-      faceapi.nets.faceExpressionNet.loadFromUri('.stress-detector/models')
+      faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
+      faceapi.nets.faceExpressionNet.loadFromUri('./models')
     ]);
     startVideo();
   } catch (error) {
@@ -163,8 +163,3 @@ function debounce(func, delay) {
 
 // Initialize
 loadModels();
-
-// Handle orientation changes (for mobile devices)
-window.addEventListener('orientationchange', debounce(() => {
-  adjustVideoAndCanvasSize();
-}, 200));
