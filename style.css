@@ -114,7 +114,16 @@ canvas {
   .timer {
     font-size: 1.2rem;
   }
-
+  .refresh-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
   .footer {
     font-size: 0.9rem;
   }
@@ -133,6 +142,17 @@ canvas {
   .stress-level,
   .timer {
     font-size: 1rem;
+  }
+
+  .refresh-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
   .footer {
