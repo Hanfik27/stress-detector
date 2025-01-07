@@ -1,9 +1,9 @@
 // Element references
-const video = document.getElementById('video');
-const detectionStatus = document.getElementById('detection-status');
-const stressLevel = document.getElementById('stress-level');
-const timer = document.getElementById('timer');
-const finalResult = document.getElementById('final-result');
+const video = document.getElementById("video");
+const detectionStatus = document.getElementById("detection-status");
+const stressLevel = document.getElementById("stress-level");
+const timer = document.getElementById("timer");
+const finalResult = document.getElementById("final-result");
 
 // Variables
 let finalStressPercentage = 0;
@@ -15,28 +15,43 @@ const DETECTION_INTERVAL = 1000 / 60;
 async function loadModels() {
   try {
     await Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
-      faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
-      faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
-      faceapi.nets.faceExpressionNet.loadFromUri('./models')
+      faceapi.nets.tinyFaceDetector.loadFromUri("./models"),
+      faceapi.nets.faceLandmark68Net.loadFromUri("./models"),
+      faceapi.nets.faceRecognitionNet.loadFromUri("./models"),
+      faceapi.nets.faceExpressionNet.loadFromUri("./models"),
     ]);
     startVideo();
   } catch (error) {
-    console.error('Error loading models:', error);
+    console.error("Error loading models:", error);
   }
 }
 
-// Start video stream
 function startVideo() {
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 720, height: 540, frameRate: 60 } })
-    .then(stream => { video.srcObject = stream; })
-    .catch(error => console.error('Error accessing camera:', error));
+  const constraints = {
+    video: {
+      facingMode: "user",
+      width: { ideal: 720 },
+      height: { ideal: 540 },
+      frameRate: { ideal: 30, max: 60 },
+    },
+  };
+
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((error) => console.error("Error accessing camera:", error));
+  } else {
+    alert("Camera not supported on this device.");
+  }
 }
 
 // Handle video playback
-video.addEventListener('play', () => {
+video.addEventListener("play", () => {
   const canvas = faceapi.createCanvasFromMedia(video);
-  document.querySelector('.video-container').appendChild(canvas);
+  document.querySelector(".video-container").appendChild(canvas);
   faceapi.matchDimensions(canvas, { width: video.videoWidth, height: video.videoHeight });
   detectFaces(canvas);
   startTimer();
@@ -44,13 +59,15 @@ video.addEventListener('play', () => {
 
 // Face detection loop
 async function detectFaces(canvas) {
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   let previousBox = null;
   const detectionLoop = async () => {
     if (!isDetectionRunning) return;
 
-    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 256, scoreThreshold: 0.4 }))
-      .withFaceLandmarks().withFaceExpressions();
+    const detections = await faceapi
+      .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 160, scoreThreshold: 0.4 }))
+      .withFaceLandmarks()
+      .withFaceExpressions();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -62,10 +79,10 @@ async function detectFaces(canvas) {
 
       finalStressPercentage = calculateStressLevel(expressions);
       drawDetectionBox(ctx, smoothedBox);
-      updateUI('Stress Detected', `${finalStressPercentage.toFixed(0)}%`);
+      updateUI("Stress Detected", `${finalStressPercentage.toFixed(0)}%`);
     } else {
       previousBox = null;
-      updateUI('No Face Detected', `${finalStressPercentage.toFixed(0)}%`);
+      updateUI("No Face Detected", `${finalStressPercentage.toFixed(0)}%`);
     }
 
     setTimeout(() => requestAnimationFrame(detectionLoop), DETECTION_INTERVAL);
@@ -79,7 +96,7 @@ function lerpBox(start, end) {
     x: lerp(start.x, end.x, 0.3),
     y: lerp(start.y, end.y, 0.3),
     width: lerp(start.width, end.width, 0.3),
-    height: lerp(start.height, end.height, 0.3)
+    height: lerp(start.height, end.height, 0.3),
   };
 }
 
@@ -94,13 +111,13 @@ function calculateStressLevel(expressions) {
 
 // Draw detection box
 function drawDetectionBox(ctx, box) {
-  ctx.strokeStyle = '#0000FF';
+  ctx.strokeStyle = "#0000FF";
   ctx.lineWidth = 2;
   ctx.strokeRect(box.x, box.y, box.width, box.height);
-  ctx.font = 'bold 16px Arial';
-  ctx.fillStyle = 'white';
+  ctx.font = "bold 16px Arial";
+  ctx.fillStyle = "white";
   ctx.lineWidth = 3;
-  ctx.fillText('Face Detected', box.x, box.y - 10);
+  ctx.fillText("Face Detected", box.x, box.y - 10);
 }
 
 // Timer
@@ -117,10 +134,10 @@ function startTimer() {
 
 function stopDetection() {
   isDetectionRunning = false;
-  updateUI('Final Result', `${finalStressPercentage.toFixed(0)}%`);
-  updateTimer('Time Remaining: 0 seconds');
+  updateUI("Final Result", `${finalStressPercentage.toFixed(0)}%`);
+  updateTimer("Time Remaining: 0 seconds");
   finalResult.textContent = `Final Stress Level: ${finalStressPercentage.toFixed(0)}%`;
-  finalResult.style.display = 'block';
+  finalResult.style.display = "block";
 }
 
 // UI updates
@@ -134,19 +151,22 @@ function updateTimer(timerText) {
 }
 
 // Handle window resizing (to support mobile devices and window resizing)
-window.addEventListener('resize', debounce(() => {
-  adjustVideoAndCanvasSize();
-}, 200));
+window.addEventListener(
+  "resize",
+  debounce(() => {
+    adjustVideoAndCanvasSize();
+  }, 200)
+);
 
 // Adjust video and canvas size dynamically
 function adjustVideoAndCanvasSize() {
-  const container = document.querySelector('.video-container');
+  const container = document.querySelector(".video-container");
   const aspectRatio = video.videoWidth / video.videoHeight;
   const width = container.clientWidth;
   video.width = width;
   video.height = width / aspectRatio;
 
-  const canvas = document.querySelector('canvas');
+  const canvas = document.querySelector("canvas");
   if (canvas) faceapi.matchDimensions(canvas, { width, height: width / aspectRatio });
 }
 
